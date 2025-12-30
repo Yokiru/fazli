@@ -1,5 +1,5 @@
 import { Button } from '../../atoms/Button/Button';
-import { useInView } from '../../../hooks/useInView';
+import { useScrollReveal } from '../../../hooks/useScrollReveal';
 import './Process.css';
 
 // CONFIG: Process steps data
@@ -31,18 +31,18 @@ const processSteps = [
  * Displays vertical list of process steps
  */
 export function Process() {
-    const [ref, isVisible] = useInView(0.1);
+    useScrollReveal();
 
     return (
         <section id="process" className="process container">
-            <div ref={ref} className={`process__header fade-in ${isVisible ? 'visible' : ''}`}>
+            <div className="process__header reveal-text">
                 <h2 className="process__title">Proses Kerja</h2>
                 <Button href="#contact" variant="ghost" size="small">
                     Mulai Project →
                 </Button>
             </div>
 
-            <div className="process__list">
+            <div className="process__list reveal-group">
                 {processSteps.map((step) => (
                     <ProcessStep key={step.id} step={step} />
                 ))}
@@ -60,10 +60,8 @@ interface ProcessStepProps {
 }
 
 function ProcessStep({ step }: ProcessStepProps) {
-    const [ref, isVisible] = useInView(0.1);
-
     return (
-        <article ref={ref} className={`process-step fade-in ${isVisible ? 'visible' : ''}`}>
+        <article className="process-step">
             <div className="process-step__header">
                 <span className="process-step__number">{step.id}.</span>
                 <h3 className="process-step__title">{step.title}</h3>

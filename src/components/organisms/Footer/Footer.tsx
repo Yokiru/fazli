@@ -1,5 +1,5 @@
 import { Button } from '../../atoms/Button/Button';
-import { useInView } from '../../../hooks/useInView';
+import { useScrollReveal } from '../../../hooks/useScrollReveal';
 import './Footer.css';
 
 /**
@@ -7,11 +7,11 @@ import './Footer.css';
  * Contains: CTA headline, Contact info, Copyright
  */
 export function Footer() {
-    const [ref, isVisible] = useInView(0.1);
+    useScrollReveal();
 
     return (
         <footer id="contact" className="footer container" role="contentinfo">
-            <div ref={ref} className={`footer__cta fade-in ${isVisible ? 'visible' : ''}`}>
+            <div className="footer__cta reveal-text">
                 <h2 className="footer__headline">Mari Berkolaborasi!</h2>
                 <Button href="https://wa.me/6282139233954" ariaLabel="Hubungi via WhatsApp">
                     Hubungi Saya

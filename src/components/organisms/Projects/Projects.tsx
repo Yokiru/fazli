@@ -1,5 +1,5 @@
 import { ProjectCard } from '../../molecules/ProjectCard/ProjectCard';
-import { useInView } from '../../../hooks/useInView';
+import { useScrollReveal } from '../../../hooks/useScrollReveal';
 import './Projects.css';
 
 // CONFIG: Project data - Edit titles, categories, and images here
@@ -47,18 +47,18 @@ const projectsData = [
  * Displays a 2-column grid of project cards
  */
 export function Projects() {
-    const [ref, isVisible] = useInView(0.1);
+    useScrollReveal();
 
     return (
         <section id="projects" className="projects container">
-            <div ref={ref} className={`projects__header fade-in ${isVisible ? 'visible' : ''}`}>
+            <div className="projects__header reveal-text">
                 <h2 className="projects__title">Karya Terbaru</h2>
                 <p className="projects__subtitle">
                     Koleksi desain kreatif untuk berbagai kebutuhan bisnis dan komunitas.
                 </p>
             </div>
 
-            <div className="projects__grid">
+            <div className="projects__grid reveal-group">
                 {projectsData.map((project) => (
                     <ProjectCard
                         key={project.id}

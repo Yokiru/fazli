@@ -1,4 +1,3 @@
-import { useInView } from '../../../hooks/useInView';
 import './ProjectCard.css';
 
 interface ProjectCardProps {
@@ -14,14 +13,8 @@ interface ProjectCardProps {
  * Ref: MASTER_DESIGN_SYSTEM.md -> Section: PROJECT_CARD
  */
 export function ProjectCard({ title, category, imageUrl, href = '#' }: ProjectCardProps) {
-    const [ref, isVisible] = useInView(0.1);
-
     return (
-        <a
-            href={href}
-            className={`project-card fade-in ${isVisible ? 'visible' : ''}`}
-            ref={ref as React.RefObject<HTMLAnchorElement>}
-        >
+        <a href={href} className="project-card reveal-image">
             <div className="project-card__image-wrapper">
                 <img
                     src={imageUrl}

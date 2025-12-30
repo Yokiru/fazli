@@ -1,4 +1,4 @@
-import { useInView } from '../../../hooks/useInView';
+import { useScrollReveal } from '../../../hooks/useScrollReveal';
 import './Services.css';
 
 // CONFIG: Service categories for marquee/display
@@ -65,11 +65,11 @@ const servicesData = [
  * Displays services with details and features
  */
 export function Services() {
-    const [ref, isVisible] = useInView(0.1);
+    useScrollReveal();
 
     return (
         <section id="services" className="services container">
-            <div ref={ref} className={`services__header fade-in ${isVisible ? 'visible' : ''}`}>
+            <div className="services__header reveal-text">
                 <h2 className="services__title">Layanan</h2>
                 <div className="services__categories">
                     {serviceCategories.map((cat, index) => (
@@ -83,7 +83,7 @@ export function Services() {
                 </div>
             </div>
 
-            <div className="services__list">
+            <div className="services__list reveal-group">
                 {servicesData.map((service, index) => (
                     <ServiceItem key={service.id} service={service} index={index + 1} />
                 ))}
@@ -105,10 +105,8 @@ interface ServiceItemProps {
 }
 
 function ServiceItem({ service, index }: ServiceItemProps) {
-    const [ref, isVisible] = useInView(0.1);
-
     return (
-        <article ref={ref} className={`service-item fade-in ${isVisible ? 'visible' : ''}`}>
+        <article className="service-item">
             <div className="service-item__header">
                 <div className="service-item__title-row">
                     <span className="service-item__number">{index}.</span>
