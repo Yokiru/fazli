@@ -1,0 +1,158 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(13, 13, 13, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    height: 72px;
+    padding: 0 16px;
+    position: relative;
+    z-index: 102;
+    /* Ensure logo and toggle are above mobile menu */
+}
+
+@media (min-width: 768px) {
+    .header__inner {
+        padding: 0 5px;
+    }
+}
+
+.header__logo {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.header__nav {
+    display: none;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+@media (min-width: 768px) {
+    .header__nav {
+        display: flex;
+    }
+}
+
+.header__link {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    transition: color var(--transition-fast);
+}
+
+.header__link:hover,
+.header__link.active {
+    color: var(--color-primary);
+}
+
+/* Mobile Menu Toggle */
+.header__menu-toggle {
+    display: block;
+    background: none;
+    border: none;
+    color: var(--color-text-primary);
+    padding: var(--spacing-sm);
+    cursor: pointer;
+    z-index: 102;
+    /* Ensure toggle is clickable */
+}
+
+@media (min-width: 768px) {
+    .header__menu-toggle {
+        display: none;
+    }
+}
+
+.header__menu-toggle svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Mobile Menu Overlay */
+.header__mobile-menu {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: auto;
+    /* Fit content height */
+    min-height: 50vh;
+    /* Minimum height to look good */
+    background: #050505;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 16px 40px;
+    /* Top padding to clear header */
+    gap: 24px;
+    /* Uniform gap for all items */
+    z-index: 101;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-100%);
+    /* Slower, smoother exit with slight delay for visibility to ensure fade out completes */
+    transition: opacity 0.5s ease-in-out, transform 0.6s cubic-bezier(0.85, 0, 0.15, 1), visibility 0.5s linear 0.1s;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    /* Shadow to separate from content */
+}
+
+.header__mobile-menu.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    /* Immediate visibility for entrance, standard ease out for movement */
+    transition: opacity 0.5s ease-out, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 0s;
+}
+
+@media (min-width: 768px) {
+    .header__mobile-menu {
+        display: none !important;
+    }
+}
+
+.header__mobile-link {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.header__mobile-link:hover {
+    color: var(--color-primary);
+}
+
+.header__mobile-cta {
+    margin-top: 0;
+    /* Removing extra margin since flex gap handles it */
+}
+
+/* Specific override for the button in mobile menu */
+.header__mobile-cta .mobile-cta-btn {
+    border-radius: 50px;
+    padding: 12px 32px;
+    background-color: #222;
+    border: none;
+    color: white;
+    /* Ensure text is visible */
+    margin-top: 0;
+    /* Removing extra margin */
+}
+
+.header__mobile-cta .mobile-cta-btn:hover {
+    background-color: #333;
+}

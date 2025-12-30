@@ -1,0 +1,20 @@
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: transparent;
+    color: var(--color-text-primary);
+    transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.social-icon:hover {
+    transform: scale(1.1);
+}
+
+.social-icon svg {
+    width: 16px;
+    height: 16px;
+}
