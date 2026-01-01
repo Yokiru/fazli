@@ -25,7 +25,7 @@ export function LoginPage() {
 
     return (
         <main className="login-page">
-            <div className="login-card reveal-image">
+            <div className="login-card">
                 <div className="login-header">
                     <h1 className="login-title">Admin Access</h1>
                     <p className="login-subtitle">Masukkan password untuk masuk</p>
