@@ -13,7 +13,7 @@ export function Footer() {
         <footer id="contact" className="footer container" role="contentinfo">
             <div className="footer__cta reveal-text">
                 <h2 className="footer__headline">Mari Berkolaborasi!</h2>
-                <Button href="https://wa.me/6282139233954" ariaLabel="Hubungi via WhatsApp">
+                <Button href="https://wa.me/6282139233954" aria-label="Hubungi via WhatsApp">
                     Hubungi Saya
                 </Button>
 

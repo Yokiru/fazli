@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import type { Project } from '../../types/database.types';
 import { Button } from '../../components/atoms/Button/Button';
@@ -6,7 +6,6 @@ import './Admin.css';
 
 export function ProjectsManager() {
     const [projects, setProjects] = useState<Project[]>([]);
-    const [loading, setLoading] = useState(true);
     const [uploading, setUploading] = useState(false);
 
     // Form State
@@ -22,7 +21,6 @@ export function ProjectsManager() {
     const fetchProjects = async () => {
         const { data } = await supabase.from('projects').select('*').order('id', { ascending: false });
         setProjects(data || []);
-        setLoading(false);
     };
 
     const handleImageUpload = async (file: File) => {

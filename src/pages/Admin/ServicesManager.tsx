@@ -6,7 +6,6 @@ import './Admin.css';
 
 export function ServicesManager() {
     const [services, setServices] = useState<Service[]>([]);
-    const [loading, setLoading] = useState(true);
     const [uploading, setUploading] = useState(false);
 
     // Form States
@@ -24,7 +23,6 @@ export function ServicesManager() {
     const fetchServices = async () => {
         const { data } = await supabase.from('services').select('*').order('id', { ascending: true });
         setServices(data || []);
-        setLoading(false);
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
