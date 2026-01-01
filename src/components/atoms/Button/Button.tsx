@@ -1,13 +1,15 @@
+import type { ButtonHTMLAttributes, AnchorHTMLAttributes } from 'react';
 import './Button.css';
 
-interface ButtonProps {
-    children: React.ReactNode;
-    variant?: 'primary' | 'ghost';
-    size?: 'default' | 'small';
+type ButtonVariant = 'primary' | 'ghost';
+type ButtonSize = 'default' | 'small';
+
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+    variant?: ButtonVariant;
+    size?: ButtonSize;
     href?: string;
-    onClick?: () => void;
-    className?: string;
-    ariaLabel?: string;
+    // We can also support anchor props if needed, but for now let's keep it simple
+    // By extending ButtonHTMLAttributes, we get onClick, disabled, type, etc.
 }
 
 /**
@@ -20,23 +22,22 @@ export function Button({
     variant = 'primary',
     size = 'default',
     href,
-    onClick,
     className = '',
-    ariaLabel,
+    ...props
 }: ButtonProps) {
     const baseClass = `button button--${variant} ${size === 'small' ? 'button--small' : ''} ${className}`.trim();
 
     // If href is provided, render as anchor
     if (href) {
         return (
-            <a href={href} className={baseClass} aria-label={ariaLabel}>
+            <a href={href} className={baseClass} {...(props as AnchorHTMLAttributes<HTMLAnchorElement>)}>
                 {children}
             </a>
         );
     }
 
     return (
-        <button className={baseClass} onClick={onClick} aria-label={ariaLabel}>
+        <button className={baseClass} {...props}>
             {children}
         </button>
     );

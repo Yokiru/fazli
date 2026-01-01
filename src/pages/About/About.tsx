@@ -1,34 +1,9 @@
+import { useEffect, useState } from 'react';
 import { useScrollReveal } from '../../hooks/useScrollReveal';
 import { Footer } from '../../components/organisms/Footer/Footer';
+import { supabase } from '../../lib/supabase';
+import type { Tool, Experience } from '../../types/database.types';
 import './About.css';
-
-// Tool/software icons data
-const toolsData = [
-    { name: 'PixelLab', category: 'Graphic Design', image: '/stack-pixellab.webp' },
-    { name: 'Canva', category: 'Design Tool', image: '/stack-canva.jpg' },
-    { name: 'Photoshop', category: 'Photo Editing', image: '/stack-photoshop.png' },
-    { name: 'Ibis Paint', category: 'Digital Art', image: '/stack-ibispaint.jpg' },
-    { name: 'Infinite Design', category: 'Vector Design', image: '/stack-infinitedesign.png' },
-    { name: 'PicsArt', category: 'Photo & Video', image: '/stack-picsart.png' },
-];
-
-// Experience data
-const experienceData = [
-    {
-        id: 1,
-        company: 'Freelance Designer',
-        role: 'Creative Designer',
-        period: '2021 - Sekarang',
-        description: 'Mengerjakan berbagai project desain grafis untuk klien dari berbagai industri, termasuk E-sports, UMKM, dan brand lokal.',
-    },
-    {
-        id: 2,
-        company: 'Universitas',
-        role: 'S1 Ilmu Komunikasi',
-        period: '2020 - Sekarang',
-        description: 'Mendalami ilmu komunikasi visual dan strategi branding sebagai fondasi dalam berkarir di dunia desain.',
-    },
-];
 
 /**
  * About Page Component
@@ -36,6 +11,38 @@ const experienceData = [
  */
 export function AboutPage() {
     useScrollReveal();
+    const [tools, setTools] = useState<Tool[]>([]);
+    const [experience, setExperience] = useState<Experience[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Fetch Tools
+                const { data: toolsData } = await supabase
+                    .from('tools')
+                    .select('*')
+                    .order('id', { ascending: true });
+
+                if (toolsData) setTools(toolsData);
+
+                // Fetch Experience
+                const { data: expData } = await supabase
+                    .from('experience')
+                    .select('*')
+                    .order('id', { ascending: true });
+
+                if (expData) setExperience(expData);
+
+            } catch (error) {
+                console.error('Error fetching about data:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     return (
         <>
@@ -69,12 +76,16 @@ export function AboutPage() {
                 <section className="about-experience container">
                     <div className="about-section-header reveal-text">
                         <h2 className="about-section-title">Pengalaman</h2>
-                        <span className="about-section-count">{experienceData.length}</span>
+                        <span className="about-section-count">{experience.length}</span>
                     </div>
                     <div className="about-experience__list reveal-group">
-                        {experienceData.map((exp) => (
-                            <ExperienceItem key={exp.id} experience={exp} />
-                        ))}
+                        {loading ? (
+                            <p>Loading experience...</p>
+                        ) : (
+                            experience.map((exp) => (
+                                <ExperienceItem key={exp.id} experience={exp} />
+                            ))
+                        )}
                     </div>
                 </section>
 
@@ -84,10 +95,10 @@ export function AboutPage() {
                         <h2 className="about-section-title">My Stack</h2>
                         <div className="about-tools__line"></div>
                         <div className="about-tools__icons">
-                            {toolsData.map((tool) => (
+                            {tools.map((tool) => (
                                 <img
-                                    key={tool.name}
-                                    src={tool.image}
+                                    key={tool.id}
+                                    src={tool.image_url}
                                     alt={tool.name}
                                     className="about-tools__icon-preview"
                                 />
@@ -95,23 +106,27 @@ export function AboutPage() {
                         </div>
                     </div>
                     <div className="about-tools__grid reveal-group">
-                        {toolsData.map((tool) => (
-                            <div key={tool.name} className="tool-card">
-                                <img
-                                    src={tool.image}
-                                    alt={tool.name}
-                                    className="tool-card__icon"
-                                />
-                                <div className="tool-card__content">
-                                    <div className="tool-card__top-row">
-                                        <span className="tool-card__name">{tool.name}</span>
-                                        <div className="tool-card__line"></div>
-                                        <span className="tool-card__arrow">↗</span>
+                        {loading ? (
+                            <p>Loading tools...</p>
+                        ) : (
+                            tools.map((tool) => (
+                                <div key={tool.id} className="tool-card">
+                                    <img
+                                        src={tool.image_url}
+                                        alt={tool.name}
+                                        className="tool-card__icon"
+                                    />
+                                    <div className="tool-card__content">
+                                        <div className="tool-card__top-row">
+                                            <span className="tool-card__name">{tool.name}</span>
+                                            <div className="tool-card__line"></div>
+                                            <span className="tool-card__arrow">↗</span>
+                                        </div>
+                                        <span className="tool-card__category">{tool.category}</span>
                                     </div>
-                                    <span className="tool-card__category">{tool.category}</span>
                                 </div>
-                            </div>
-                        ))}
+                            ))
+                        )}
                     </div>
                 </section>
             </main>
@@ -123,13 +138,7 @@ export function AboutPage() {
 
 // Experience Item Component
 interface ExperienceItemProps {
-    experience: {
-        id: number;
-        company: string;
-        role: string;
-        period: string;
-        description: string;
-    };
+    experience: Experience;
 }
 
 function ExperienceItem({ experience }: ExperienceItemProps) {
