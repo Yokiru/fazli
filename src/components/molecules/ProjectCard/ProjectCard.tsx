@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import './ProjectCard.css';
 
 interface ProjectCardProps {
     title: string;
     category: string;
     imageUrl: string;
-    href?: string;
 }
 
 /**
@@ -15,21 +15,34 @@ interface ProjectCardProps {
  */
 export function ProjectCard({ title, category, imageUrl }: ProjectCardProps) {
     const [isOpen, setIsOpen] = useState(false);
+    const [isClosing, setIsClosing] = useState(false);
 
-    const handleClick = (e: React.MouseEvent) => {
-        e.preventDefault();
+    const handleClick = () => {
         setIsOpen(true);
-        document.body.style.overflow = 'hidden'; // Prevent scroll when modal open
+        document.body.style.overflow = 'hidden';
     };
 
     const handleClose = () => {
-        setIsOpen(false);
-        document.body.style.overflow = '';
+        setIsClosing(true);
+        setTimeout(() => {
+            setIsOpen(false);
+            setIsClosing(false);
+            document.body.style.overflow = '';
+        }, 250);
     };
+
+    // Close on Escape key
+    useEffect(() => {
+        const handleEsc = (e: KeyboardEvent) => {
+            if (e.key === 'Escape' && isOpen) handleClose();
+        };
+        window.addEventListener('keydown', handleEsc);
+        return () => window.removeEventListener('keydown', handleEsc);
+    }, [isOpen]);
 
     return (
         <>
-            <div className="project-card reveal-image" onClick={handleClick}>
+            <div className="project-card" onClick={handleClick}>
                 <div className="project-card__image-wrapper">
                     <img
                         src={imageUrl}
@@ -45,13 +58,25 @@ export function ProjectCard({ title, category, imageUrl }: ProjectCardProps) {
                 </div>
             </div>
 
-            {/* Lightbox Modal */}
-            {isOpen && (
-                <div className="lightbox-overlay" onClick={handleClose}>
-                    <button className="lightbox-close" onClick={handleClose} aria-label="Close">
-                        ✕
+            {/* Lightbox Modal - using Portal to render outside component tree */}
+            {isOpen && createPortal(
+                <div
+                    className={`lightbox-overlay ${isClosing ? 'lightbox-closing' : ''}`}
+                    onClick={handleClose}
+                >
+                    <button
+                        className="lightbox-close"
+                        onClick={handleClose}
+                        aria-label="Close lightbox"
+                    >
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M18 6L6 18M6 6l12 12" />
+                        </svg>
                     </button>
-                    <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+                    <div
+                        className={`lightbox-content ${isClosing ? 'lightbox-content-closing' : ''}`}
+                        onClick={(e) => e.stopPropagation()}
+                    >
                         <img
                             src={imageUrl}
                             alt={`${title} full view`}
@@ -62,7 +87,8 @@ export function ProjectCard({ title, category, imageUrl }: ProjectCardProps) {
                             <span className="lightbox-category">{category}</span>
                         </div>
                     </div>
-                </div>
+                </div>,
+                document.body
             )}
         </>
     );
