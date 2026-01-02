@@ -145,10 +145,22 @@
     flex-shrink: 0;
 }
 
-/* Hide footer on mobile - show only image */
+/* Mobile: Show footer with adjusted layout */
 @media (max-width: 767px) {
     .project-card__footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 8px 0;
+    }
+
+    .project-card__info {
         display: none;
+    }
+
+    .project-card__actions {
+        width: 100%;
+        justify-content: flex-start;
     }
 }
 
