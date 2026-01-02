@@ -4,6 +4,7 @@ export interface Project {
     title: string;
     category: string;
     image_url: string;
+    like_count: number;
 }
 
 export interface Tool {

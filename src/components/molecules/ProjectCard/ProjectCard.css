@@ -239,10 +239,20 @@
 
 .lightbox-caption {
     margin-top: 20px;
-    text-align: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.lightbox-caption-text {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    text-align: left;
 }
 
 .lightbox-title {
@@ -255,6 +265,45 @@
 .lightbox-category {
     font-size: 14px;
     color: #888888;
+}
+
+/* Like & Share Action Buttons */
+.lightbox-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.lightbox-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 24px;
+    color: #ffffff;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.lightbox-action-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.lightbox-action-btn:disabled {
+    cursor: default;
+}
+
+.lightbox-action-btn.liked {
+    color: #ff4757;
+    border-color: rgba(255, 71, 87, 0.3);
+    background: rgba(255, 71, 87, 0.15);
+}
+
+.lightbox-action-btn svg {
+    flex-shrink: 0;
 }
 
 /* Mobile adjustments */
@@ -271,12 +320,18 @@
     }
 
     .lightbox-image {
-        max-height: 70vh;
+        max-height: 60vh;
         border-radius: 8px;
     }
 
     .lightbox-caption {
+        flex-direction: column;
+        gap: 16px;
         margin-top: 16px;
+    }
+
+    .lightbox-caption-text {
+        text-align: center;
     }
 
     .lightbox-title {
@@ -285,5 +340,15 @@
 
     .lightbox-category {
         font-size: 12px;
+    }
+
+    .lightbox-actions {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .lightbox-action-btn {
+        padding: 8px 14px;
+        font-size: 13px;
     }
 }

@@ -75,9 +75,11 @@ export function Projects() {
                         projects.map((project) => (
                             <div className="projects__slide" key={project.id}>
                                 <ProjectCard
+                                    id={project.id}
                                     title={project.title}
                                     category={project.category}
                                     imageUrl={project.image_url}
+                                    likeCount={project.like_count || 0}
                                 />
                             </div>
                         ))
