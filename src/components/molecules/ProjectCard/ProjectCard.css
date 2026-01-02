@@ -14,7 +14,7 @@
     aspect-ratio: 3 / 4;
     overflow: hidden;
     background-color: #1a1a1a;
-    border-radius: 16px;
+    border-radius: 8px;
 }
 
 .project-card__image {

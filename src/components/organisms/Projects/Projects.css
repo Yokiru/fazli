@@ -37,9 +37,9 @@
     flex: 1;
 }
 
-/* Each Slide - Mobile: 3 cards with peek effect */
+/* Each Slide - Mobile: 3 cards with tiny peek */
 .projects__slide {
-    flex: 0 0 calc(33.333% - 8px);
+    flex: 0 0 calc(33% - 4px);
     scroll-snap-align: start;
 }
 
@@ -52,7 +52,7 @@
     scrollbar-width: none;
     -ms-overflow-style: none;
     padding: 8px 0;
-    padding-right: 40px;
+    padding-right: 16px;
     /* Creates peek effect on right */
     flex: 1;
 }
