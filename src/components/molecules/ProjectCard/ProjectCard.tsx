@@ -12,6 +12,7 @@ interface ProjectCardProps {
  * Project Card Molecule
  * Displays a project with image, title, and category
  * Click to open full image in lightbox modal
+ * Includes image protection against casual downloads
  */
 export function ProjectCard({ title, category, imageUrl }: ProjectCardProps) {
     const [isOpen, setIsOpen] = useState(false);
@@ -31,6 +32,18 @@ export function ProjectCard({ title, category, imageUrl }: ProjectCardProps) {
         }, 250);
     };
 
+    // Prevent right-click on images
+    const preventContextMenu = (e: React.MouseEvent) => {
+        e.preventDefault();
+        return false;
+    };
+
+    // Prevent drag on images
+    const preventDrag = (e: React.DragEvent) => {
+        e.preventDefault();
+        return false;
+    };
+
     // Close on Escape key
     useEffect(() => {
         const handleEsc = (e: KeyboardEvent) => {
@@ -47,9 +60,13 @@ export function ProjectCard({ title, category, imageUrl }: ProjectCardProps) {
                     <img
                         src={imageUrl}
                         alt={`${title} project preview`}
-                        className="project-card__image"
+                        className="project-card__image protected-image"
                         loading="lazy"
+                        onContextMenu={preventContextMenu}
+                        onDragStart={preventDrag}
                     />
+                    {/* Transparent overlay to prevent direct image access */}
+                    <div className="project-card__overlay" />
                 </div>
                 <div className="project-card__info">
                     <span className="project-card__title">{title}</span>
@@ -63,6 +80,7 @@ export function ProjectCard({ title, category, imageUrl }: ProjectCardProps) {
                 <div
                     className={`lightbox-overlay ${isClosing ? 'lightbox-closing' : ''}`}
                     onClick={handleClose}
+                    onContextMenu={preventContextMenu}
                 >
                     <button
                         className="lightbox-close"
@@ -77,11 +95,17 @@ export function ProjectCard({ title, category, imageUrl }: ProjectCardProps) {
                         className={`lightbox-content ${isClosing ? 'lightbox-content-closing' : ''}`}
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <img
-                            src={imageUrl}
-                            alt={`${title} full view`}
-                            className="lightbox-image"
-                        />
+                        <div className="lightbox-image-wrapper">
+                            <img
+                                src={imageUrl}
+                                alt={`${title} full view`}
+                                className="lightbox-image protected-image"
+                                onContextMenu={preventContextMenu}
+                                onDragStart={preventDrag}
+                            />
+                            {/* Transparent overlay for lightbox */}
+                            <div className="lightbox-image-overlay" />
+                        </div>
                         <div className="lightbox-caption">
                             <span className="lightbox-title">{title}</span>
                             <span className="lightbox-category">{category}</span>
