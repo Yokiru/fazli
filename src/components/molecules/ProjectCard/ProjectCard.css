@@ -84,16 +84,70 @@
     user-drag: none;
 }
 
+/* Hidden utility class */
+.project-card__like-badge.hidden {
+    display: none;
+}
+
+/* Card Footer (contains info + actions) */
+.project-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 0;
+}
+
 .project-card__info {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 12px 0;
+    flex: 1;
+    min-width: 0;
 }
 
-/* Hide card info on mobile */
+/* Card Action Buttons */
+.project-card__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.project-card__action-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
+    border-radius: 16px;
+    color: #c2c2c2;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.project-card__action-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+}
+
+.project-card__action-btn:disabled {
+    cursor: default;
+}
+
+.project-card__action-btn.liked {
+    color: #ff4757;
+    background: rgba(255, 71, 87, 0.15);
+}
+
+.project-card__action-btn svg {
+    flex-shrink: 0;
+}
+
+/* Hide footer on mobile - show only image */
 @media (max-width: 767px) {
-    .project-card__info {
+    .project-card__footer {
         display: none;
     }
 }
