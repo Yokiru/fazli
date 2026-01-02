@@ -15,15 +15,99 @@
     max-width: 500px;
 }
 
-.projects__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 18px;
+/* Slider Wrapper */
+.projects__slider-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
 }
 
-@media (min-width: 768px) {
-    .projects__grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 22px;
+/* Horizontal Slider */
+.projects__slider {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE/Edge */
+    padding: 8px 0;
+    flex: 1;
+}
+
+.projects__slider::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari */
+}
+
+/* Each Slide */
+.projects__slide {
+    flex: 0 0 calc(100% - 20px);
+    scroll-snap-align: start;
+}
+
+/* 2 cards on tablet */
+@media (min-width: 600px) {
+    .projects__slide {
+        flex: 0 0 calc(50% - 10px);
     }
+}
+
+/* 3 cards on desktop */
+@media (min-width: 992px) {
+    .projects__slide {
+        flex: 0 0 calc(33.333% - 14px);
+    }
+}
+
+/* Navigation Buttons */
+.projects__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 10;
+    backdrop-filter: blur(8px);
+}
+
+.projects__nav:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.projects__nav--left {
+    left: -24px;
+}
+
+.projects__nav--right {
+    right: -24px;
+}
+
+/* Hide nav buttons on mobile - use swipe instead */
+@media (max-width: 768px) {
+    .projects__nav {
+        display: none;
+    }
+
+    .projects__slider-wrapper {
+        gap: 0;
+    }
+}
+
+/* Loading state */
+.projects__loading {
+    color: var(--color-text-secondary);
+    padding: 40px 0;
 }
