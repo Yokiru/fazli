@@ -41,6 +41,32 @@
     background: transparent;
 }
 
+/* Like Badge on Card */
+.project-card__like-badge {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 10px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    border-radius: 20px;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.project-card__like-badge.liked {
+    color: #ff4757;
+}
+
+.project-card__like-badge svg {
+    flex-shrink: 0;
+}
+
 .project-card:hover .project-card__image {
     transform: scale(1.05);
 }
