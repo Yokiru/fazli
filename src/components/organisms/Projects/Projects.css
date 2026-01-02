@@ -37,28 +37,52 @@
     flex: 1;
 }
 
-.projects__slider::-webkit-scrollbar {
-    display: none;
-    /* Chrome/Safari */
-}
-
-/* Each Slide */
+/* Each Slide - Mobile: 3 cards with peek effect */
 .projects__slide {
-    flex: 0 0 calc(100% - 20px);
+    flex: 0 0 calc(33.333% - 8px);
     scroll-snap-align: start;
 }
 
-/* 2 cards on tablet */
+/* Show peek of next card by not using full container width */
+.projects__slider {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 8px 0;
+    padding-right: 40px;
+    /* Creates peek effect on right */
+    flex: 1;
+}
+
+.projects__slider::-webkit-scrollbar {
+    display: none;
+}
+
+/* Tablet - 3 cards */
 @media (min-width: 600px) {
     .projects__slide {
-        flex: 0 0 calc(50% - 10px);
+        flex: 0 0 calc(33.333% - 10px);
+    }
+
+    .projects__slider {
+        gap: 16px;
+        padding-right: 60px;
     }
 }
 
-/* 3 cards on desktop */
+/* Desktop - 3 cards with more gap */
 @media (min-width: 992px) {
     .projects__slide {
         flex: 0 0 calc(33.333% - 14px);
+    }
+
+    .projects__slider {
+        gap: 20px;
+        padding-right: 0;
+        /* No peek needed on desktop - has arrows */
     }
 }
 
