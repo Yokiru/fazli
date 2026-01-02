@@ -35,6 +35,13 @@
     padding: 12px 0;
 }
 
+/* Hide card info on mobile */
+@media (max-width: 767px) {
+    .project-card__info {
+        display: none;
+    }
+}
+
 .project-card__title {
     font-size: 15px;
     font-weight: 500;
