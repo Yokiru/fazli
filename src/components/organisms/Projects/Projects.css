@@ -135,3 +135,57 @@
     color: var(--color-text-secondary);
     padding: 40px 0;
 }
+
+/* Section Action Buttons - Bottom Left */
+.projects__actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.projects__action-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    color: #c2c2c2;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.projects__action-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.projects__action-btn:disabled {
+    cursor: default;
+}
+
+.projects__action-btn.liked {
+    color: #ff4757;
+    background: rgba(255, 71, 87, 0.12);
+    border-color: rgba(255, 71, 87, 0.25);
+}
+
+.projects__action-btn svg {
+    flex-shrink: 0;
+}
+
+/* Mobile adjustments for action buttons */
+@media (max-width: 768px) {
+    .projects__actions {
+        margin-top: 16px;
+    }
+
+    .projects__action-btn {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+}
